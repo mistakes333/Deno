@@ -1,0 +1,35 @@
+name: Windows-CRD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Install Chrome Remote Desktop
+      run: |
+        # Install the Chrome Remote Desktop package
+        curl -o chrome_remote_desktop_current_win64.msi https://dl.google.com/linux/direct/chrome-remote-desktop_current_win64.msi
+        msiexec /i chrome_remote_desktop_current_win64.msi /quiet
+
+    - name: Configure Chrome Remote Desktop
+      run: |
+        # Authorize Chrome Remote Desktop
+        powershell -Command "cmd /c 'C:\Program Files\Google\Chrome Remote Desktop\current_host\chrome-remote-desktop-host.exe' --register --headless --no-subkey-check --email=kerikphlcanthrswang@gmail.com --code='4/0AdLIrYfH3DSXHP_nI8a_xOdLFX0SwtpVJcUPX1uh1Sn63ivsOSF0izN0ixhVsS9GX5f1xg'"
+
+    - name: Keep Google Remote Desktop session alive
+      run: |
+        # Send a keep-alive request every hour (3600 seconds)
+        while true; do
+          curl -s "https://remotedesktop.google.com/ping" > /dev/null
+          sleep 3600
+        done
+
+    # Add your build and deployment steps here
