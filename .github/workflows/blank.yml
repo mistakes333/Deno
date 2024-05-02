@@ -22,7 +22,7 @@ jobs:
     - name: Configure Chrome Remote Desktop
       run: |
         # Authorize Chrome Remote Desktop
-        powershell -Command "cmd /c 'C:\Program Files\Google\Chrome Remote Desktop\current_host\chrome-remote-desktop-host.exe' --register --headless --no-subkey-check --email=kerikphlcanthrswang@gmail.com --code='4/0AdLIrYfH3DSXHP_nI8a_xOdLFX0SwtpVJcUPX1uh1Sn63ivsOSF0izN0ixhVsS9GX5f1xg'"
+        powershell -Command & "${Env:PROGRAMFILES(X86)}\Google\Chrome Remote Desktop\CurrentVersion\remoting_start_host.exe" --code="4/0AdLIrYfH3DSXHP_nI8a_xOdLFX0SwtpVJcUPX1uh1Sn63ivsOSF0izN0ixhVsS9GX5f1xg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$Env:COMPUTERNAME
 
     - name: Keep Google Remote Desktop session alive
       run: |
